@@ -1,0 +1,27 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint && manypkg check",
+    "lint:fix": "turbo lint -- --fix && manypkg fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "release:1": "turbo build lint typecheck && manypkg check",
+    "release:2": "changeset",
+    "release:3": "changeset version",
+    "release:4": "changeset publish"
+  },
+  "dependencies": {
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2",
+    "@manypkg/cli": "^0.21.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "eslint": "^8.48.0",
+    "prettier": "^3.0.3",
+    "tsconfig": "^0.0.1",
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@8.6.10",
+  "name": "daily-ts-essentials"
+}

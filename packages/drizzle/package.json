@@ -1,0 +1,25 @@
+{
+  "name": "@daily-ts-essentials/drizzle",
+  "version": "0.0.0",
+  "author": "Til Pöhnitzsch",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint . --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
+    "drizzle-orm": "^0.28.6",
+    "eslint": "^8.48.0",
+    "tsup": "^7.2.0",
+    "typescript": "^4.5.3"
+  },
+  "peerDependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
+    "drizzle-orm": "^0.28.6"
+  }
+}

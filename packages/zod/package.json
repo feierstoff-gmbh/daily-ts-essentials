@@ -1,0 +1,23 @@
+{
+  "name": "@daily-ts-essentials/zod",
+  "version": "0.0.0",
+  "author": "Til Pöhnitzsch",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint . --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "tsup": "^7.2.0",
+    "typescript": "^4.5.3",
+    "zod": "^3.22.4"
+  },
+  "peerDependencies": {
+    "zod": "^3.22.4"
+  }
+}
