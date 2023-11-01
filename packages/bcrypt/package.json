@@ -1,6 +1,6 @@
 {
   "name": "@daily-ts-essentials/bcrypt",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Til Pöhnitzsch",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
