@@ -1,51 +1,35 @@
-name: Release
+name: Publish
 on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
   push:
     branches:
-      - main
+      - "main"
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  release:
-    name: Release
+  publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
         with:
-          fetch-depth: 0
-
-      - name: Use PNPM
-        uses: pnpm/action-setup@v2.2.4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+          version: 7
+      - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 16.x
+          cache: "pnpm"
 
-      - name: Install deps (with cache)
-        run: pnpm install
-
-      - name: Build
-        run: pnpm turbo --filter "./packages/*" build
-
-      # Using custom token `MY_GITHUB_TOKEN` with more access to avoid rate limiting
-      - name: Create Release
-        id: changeset
-        uses: changesets/action@v1.4.4
+      - run: pnpm install --frozen-lockfile
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
         with:
-          commit: "chore(release): 📦 version packages"
-          title: "chore(release): 📦  version packages"
-          publish: npx changeset publish
+          publish: pnpm run release
         env:
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # Changeset has some issues with pnpm so we sync it up manually
-      - name: Sync lockfile if necessary
-        if: steps.changeset.outputs.hasChangesets == 'true'
-        run: |
-          git checkout changeset-release/main
-          pnpm install --no-frozen-lockfile
-          git add .
-          git commit -m "chore(release): 📦 sync lockfile"
-          git push origin changeset-release/main
