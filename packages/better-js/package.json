@@ -1,6 +1,6 @@
 {
   "name": "@daily-ts-essentials/better-js",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "author": "Til Pöhnitzsch",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
